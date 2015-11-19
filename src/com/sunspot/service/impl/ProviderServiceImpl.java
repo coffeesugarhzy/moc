@@ -1,5 +1,6 @@
 package com.sunspot.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -48,14 +49,14 @@ public class ProviderServiceImpl implements ProviderService
             int total = baseDao.queryForIntPage("select count(*) from user_info where user_type=1 and user_name like ?" , new Object[]{Utils.getKeyword(Utils.transformChar(keyword)) });
             list.setCount(total); 
             
-            return baseDao.query("select user_id, logo, remark,login_name, telphone, user_name from user_info where user_type=1 and user_name like ? limit ?,?",
+            return baseDao.query("select user_id, logo, remark,login_name, telphone, user_name,status from user_info where user_type=1 and user_name like ? limit ?,?",
                     new Object[]
                     { Utils.getKeyword(Utils.transformChar(keyword)) , list.getCurNum(), list.getRows() }, UserInfo.class);
         }else{
             int total = baseDao.queryForIntPage("select count(*) from user_info where user_type=1");
             list.setCount(total); 
             
-            return baseDao.query("select user_id, logo, remark,login_name, telphone, user_name from user_info where user_type=1 order by add_date desc limit ?,?",
+            return baseDao.query("select user_id, logo, remark,login_name, telphone, user_name,status from user_info where user_type=1 order by add_date desc limit ?,?",
                     new Object[]
                     { list.getCurNum(), list.getRows() }, UserInfo.class);
         } 
@@ -218,4 +219,21 @@ public class ProviderServiceImpl implements ProviderService
     {
         return baseDao.queryForIntPage("select count(user_id) from user_info where telphone=? ", new Object[]{telPhone})>0?true:false;
     }  
+    
+    /**
+     * 装填用户状态
+     * @param list
+     * @return
+     * @author scatlet
+     */
+    @Transactional
+    public int statusModify(String id,int status)
+    {	try{
+    		System.out.println("id--->"+id+"status--->"+status);
+    		baseDao.update("update user_info set status=? where user_id=?", new Object[]{status,id});
+    		return 1;
+    	}catch(Exception e){
+    		return 0;
+    	}
+    }
 }

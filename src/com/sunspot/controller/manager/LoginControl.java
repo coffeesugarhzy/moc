@@ -209,7 +209,9 @@ public class LoginControl
 
             // 如果合法将用户信息存入SESSION
             request.getSession().setAttribute("loginUser", userInfo);
-            runLog.info("login success,userName=" + userName);
+            runLog.info("login success,userName=" + userName); 
+            //如果用户被注销，则禁止登录
+        	if(userInfo.getStatus()==3)return RE_LOGIN_PAGE;
             return LOGIN_SUCCESS; 
         }
         else

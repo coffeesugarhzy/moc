@@ -1,5 +1,7 @@
 package com.sunspot.controller.manager;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,6 +74,7 @@ public class ProviderController
     @RequestMapping("list")
     public void list()
     {
+    	System.out.println("start!");
     }
 
     /**
@@ -410,5 +413,35 @@ public class ProviderController
         // 修改的实体
         UserInfo t = providerService.queryById(id);
         request.setAttribute("bean", t);
+    }
+    
+    /**
+     * 进入状态修改页面
+     * @param id
+     * @param status
+     * @param request
+     */
+    @RequestMapping(value = "statusModify", method = RequestMethod.GET)
+    public void statusModify(String id,String status,HttpServletRequest request)
+    {
+    	request.setAttribute("userId", id);
+    	int flag=Integer.parseInt(status);
+    	request.setAttribute("status", flag);
+    }
+    
+    /**
+     * 状态修改
+     * @param id
+     * @param status
+     * @param request
+     */
+    @RequestMapping(value = "statusModify", method = RequestMethod.POST)
+    public String statusModify(String id,int status,HttpServletRequest request)
+    {
+    	int flag=providerService.statusModify(id, status);
+    	System.out.println("value->"+status);
+    	request.setAttribute("resultCode", flag);
+    	return "rsp/submitrsp";
+
     }
 }

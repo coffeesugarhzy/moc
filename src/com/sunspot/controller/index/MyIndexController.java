@@ -440,10 +440,17 @@ public class MyIndexController
             // 查询用户角色　
             UserRole userRole = userRoleService.queryRoleByUserInfo(userInfo);
             userInfo.setUserRole(userRole);
-
-            // 如果合法将用户信息存入SESSION
-            request.getSession().setAttribute("loginUser", userInfo);
-            result.put("success", "1");
+            
+            if(userInfo.getStatus()==3)//帐户被注销了2015-11-19
+            {
+            	result.put("msg","用户登陆失败，用户名或者账号不正确");
+            	result.put("success", "0");}
+            else
+            {
+            	// 如果合法将用户信息存入SESSION
+            	request.getSession().setAttribute("loginUser", userInfo);
+            	result.put("success", "1");
+            }
         }
         else
         { 

@@ -76,4 +76,13 @@ public interface ProviderService
      * @author LuoAnDong
      */
     boolean checkRepeatTelPhone(String Telphone);
+    
+    /**
+     * 装填用户状态
+     * @param list
+     * @return
+     * @author scatlet
+     * 2015-11-19
+     */
+    int statusModify(String id,int status);
 }

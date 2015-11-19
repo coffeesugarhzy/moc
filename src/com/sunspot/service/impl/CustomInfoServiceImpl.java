@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sunspot.common.HttpUtil;
 import com.sunspot.dao.BaseDao;
@@ -73,5 +74,22 @@ public class CustomInfoServiceImpl implements CustomInfoService
     		return 1;
     	}
     	return 0;
+    }
+    
+    /**
+     * 装填客户状态
+     * @param list
+     * @return
+     * @author scatlet
+     */
+    @Transactional
+    public int statusModify(String id,int status)
+    {	try{
+    		System.out.println("id--->"+id+"status--->"+status);
+    		baseDao.update("update custom_info set status=? where custom_id=?", new Object[]{status,id});
+    		return 1;
+    	}catch(Exception e){
+    		return 0;
+    	}
     }
 }

@@ -134,13 +134,15 @@
 			});
 		});
 
+		var ary=new Array("正常","屏蔽","禁言","注销");
 		function optionForm(cellValue, options, rowObject) {
 			var id = rowObject['userId'];
 			var name = rowObject['userName'];
+			var status=rowObject['status'];
 			var ediStr = "<span class='delete'><a style='cursor:pointer' onclick='top.dsIframe(\"编辑 ["+ name+ "]\" , \"/manager/provider/modify.do?id="+id+"\" ,800,550)'>编辑</a></span>";
-		   var remarkStr = "<span class='delete'><a style='cursor:pointer' onclick='top.dsIframe(\"查看商家备注\" ,\"/manager/provider/detail1.do?id="+id+"\",700,400)'>查看</a></span>";
-	
-		   return remarkStr +"&nbsp;&nbsp;"+ ediStr;
+		    var remarkStr = "<span class='delete'><a style='cursor:pointer' onclick='top.dsIframe(\"查看商家备注\" ,\"/manager/provider/detail1.do?id="+id+"\",700,400)'>查看</a></span>";
+			var statusStr="<span class='delete'><a style='cursor:pointer' onclick='top.dsIframe(\"修改["+name+"]的状态\" ,\"/manager/provider/statusModify.do?id="+id+"&status="+status+"\",300,200)'>"+ary[status]+"</a></span>";
+		   return remarkStr +"&nbsp;&nbsp;"+ ediStr+"&nbsp;&nbsp;"+statusStr;
 
 		}
 	</script>

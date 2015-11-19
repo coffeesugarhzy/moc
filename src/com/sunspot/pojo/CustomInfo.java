@@ -32,6 +32,7 @@ public class CustomInfo implements java.io.Serializable
     private String loginPassword;
     private String addDate;
     private String updateDate;
+    private Integer status;
     private Set<CustomAddr> customAddrs = new HashSet<CustomAddr>(0);
     private Set<CustomCoupon> customCoupons = new HashSet<CustomCoupon>(0);
     private Set<CustomLike> customLikes = new HashSet<CustomLike>(0);
@@ -44,25 +45,29 @@ public class CustomInfo implements java.io.Serializable
     }
 
     /** full constructor */
-    public CustomInfo(String customName, Integer customSex, String customHead,
-            double balance, double integral, String telphone,
-            String loginPassword, String addDate, String updateDate,
-            Set<CustomAddr> customAddrs, Set<CustomCoupon> customCoupons,
-            Set<CustomLike> customLikes)
+    /** @author scatlet 2015-11-19*/
+    public CustomInfo(String customId, String customName, Integer customSex,
+			String customHead, double balance, double integral,
+			String telphone, String loginPassword, String addDate,
+			String updateDate, Integer status, Set<CustomAddr> customAddrs,
+			Set<CustomCoupon> customCoupons, Set<CustomLike> customLikes) 
     {
-        this.customName = customName;
-        this.customSex = customSex;
-        this.customHead = customHead;
-        this.balance = balance;
-        this.integral = integral;
-        this.telphone = telphone;
-        this.loginPassword = loginPassword;
-        this.addDate = addDate;
-        this.updateDate = updateDate;
-        this.customAddrs = customAddrs;
-        this.customCoupons = customCoupons;
-        this.customLikes = customLikes;
-    }
+
+		this.customId = customId;
+		this.customName = customName;
+		this.customSex = customSex;
+		this.customHead = customHead;
+		this.balance = balance;
+		this.integral = integral;
+		this.telphone = telphone;
+		this.loginPassword = loginPassword;
+		this.addDate = addDate;
+		this.updateDate = updateDate;
+		this.status = status;
+		this.customAddrs = customAddrs;
+		this.customCoupons = customCoupons;
+		this.customLikes = customLikes;
+	}
 
     // Property accessors
     @GenericGenerator(name = "generator", strategy = "uuid2")
@@ -210,5 +215,13 @@ public class CustomInfo implements java.io.Serializable
     {
         this.customLikes = customLikes;
     }
+    @Column(name="STATUS")
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 }

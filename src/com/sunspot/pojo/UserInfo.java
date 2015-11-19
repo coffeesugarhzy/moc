@@ -32,7 +32,8 @@ public class UserInfo implements java.io.Serializable
     private String remark;
     private String addDate;
     private String updateDate;
-
+    private Integer status;	//记录用户或商家的状态
+    
     // Constructors
 
     /** default constructor */
@@ -40,24 +41,26 @@ public class UserInfo implements java.io.Serializable
     {
     }
 
-    /** full constructor */
-    public UserInfo(UserRole userRole, String userName, Integer isSysuser,
-            Integer userType, String logo, String loginName,
-            String loginPassword, String telphone, String remark,
-            String addDate, String updateDate)
+    /** full constructor @author scatlet*/
+    public UserInfo(String userId, UserRole userRole, String userName,
+			Integer isSysuser, Integer userType, String logo, String loginName,
+			String loginPassword, String telphone, String remark,
+			String addDate, String updateDate, Integer status) 
     {
-        this.userRole = userRole;
-        this.userName = userName;
-        this.isSysuser = isSysuser;
-        this.userType = userType;
-        this.logo = logo;
-        this.loginName = loginName;
-        this.loginPassword = loginPassword;
-        this.telphone = telphone;
-        this.remark = remark;
-        this.addDate = addDate;
-        this.updateDate = updateDate;
-    }
+		this.userId = userId;
+		this.userRole = userRole;
+		this.userName = userName;
+		this.isSysuser = isSysuser;
+		this.userType = userType;
+		this.logo = logo;
+		this.loginName = loginName;
+		this.loginPassword = loginPassword;
+		this.telphone = telphone;
+		this.remark = remark;
+		this.addDate = addDate;
+		this.updateDate = updateDate;
+		this.status = status;
+	}
 
     // Property accessors
     @GenericGenerator(name = "generator", strategy = "uuid2")
@@ -195,5 +198,13 @@ public class UserInfo implements java.io.Serializable
     {
         this.updateDate = updateDate;
     }
+    
+    @Column(name="STATUS")
+	public Integer getStatus() {
+		return status;
+	}
 
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 }

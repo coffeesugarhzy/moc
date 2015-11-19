@@ -35,4 +35,13 @@ public interface CustomInfoService
     boolean checkRepeatPhone(String phone);
 
 	int changePwd(String telPhone, String newPasswd);
+	
+	/**
+	 * 客户状态修改
+	 * @param id
+	 * @param status
+	 * @return
+	 * 2015-11-19
+	 */
+	int statusModify(String id,int status);
 }

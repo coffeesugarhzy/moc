@@ -76,7 +76,7 @@
 			$("#list").jqGrid({
 				url : '/manager/customer/queryCustomer.do',
 				datatype : "json",
-				colNames : [ 'id', '姓名', '性别', '余额', '积分', '手机号码' ],
+				colNames : [ 'id', '姓名', '性别', '余额', '积分', '手机号码' ,'操作'],
 				colModel : [ {
 					sortable : false,
 					name : 'customId',
@@ -113,9 +113,16 @@
 					sortable : false,
 					name : 'telphone',
 					index : 'telphone',
-					width : 180,
+					width : 80,
 					align : 'left'
-				} ],
+				}, {
+					sortable : false,
+					name : 'telphone',
+					index : 'telphone',
+					width:'80px',
+					align : 'center',
+					formatter : optionForm
+				}  ],
 				jsonReader : {
 					root : "content",
 					page : "page",
@@ -139,6 +146,15 @@
 				}
 			});
 		});
+		var ary=new Array("正常","屏蔽","禁言","注销");
+		function optionForm(cellValue, options, rowObject) {
+			var id = rowObject['customId'];
+			var name = rowObject['customName'];
+			var status=rowObject['status'];
+			var statusStr="<span class='delete'><a style='cursor:pointer' onclick='top.dsIframe(\"修改["+name+"]的状态\" ,\"/manager/customer/statusModify.do?id="+id+"&status="+status+"\",300,200)'>"+ary[status]+"</a></span>";
+		   return statusStr;
+
+		}
 	</script>
 </body>
 </html>

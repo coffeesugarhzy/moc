@@ -195,6 +195,7 @@ public class MyIndexServiceImpl implements MyIndexService
         {
             CustomInfo customInfo = list.get(0);
             if (!password.equalsIgnoreCase(customInfo.getLoginPassword())) { return false; }
+            if(customInfo.getStatus()==3)return false;	//被注销了 2015-11-19
             session.setAttribute("loginCustomer", customInfo);
         }
         else
