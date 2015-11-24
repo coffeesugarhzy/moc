@@ -207,7 +207,8 @@
 										<#else>
 										    <span class="new-price">¥${ps.price}</span>
 										</#if>
-									</p></li> <#if 1==ps_index%2>
+									</p>
+								</li> <#if 1==ps_index%2>
 							</ul>
 						</li></#if> </#list>
 					</ul>
@@ -227,10 +228,12 @@
 			</div>
 			<div class="submit fr">
 				<!-- 前台显示店家状态，如果休息状态不允许下单 -->
+				<#if shop.online?? >
 				<#if shop.online == 1>
  				<a href="javascript:toConfirm();">&nbsp;选好了</a>
 				<#else>
 				<p style="background-color: #FFF8DC;">店家休息中..</p>
+				</#if>
 				</#if>
 			</div>
 	</div>
