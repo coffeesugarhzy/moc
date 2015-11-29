@@ -48,6 +48,17 @@
 	
 	/src/com/sunspot/controller/index/CommentsIndexController.java 是新添加的类
 	
+	2015-11-21
+	Fresh.java ，FarmProduce.java 添加上架判断
+	
+	ALTER TABLE cookbook MODIFY IS_SHEL INTEGER(2) DEFAULT 0;
+	
+	ALTER TABLE fresh ADD IS_SHEL INTEGER(2) DEFAULT 0;
+	
+	ALTER TABLE farm_produce ADD IS_SHEL INTEGER(2) DEFAULT 0;
+	
+	
+	
 	黄祖源
 	
 	黄祖源 任务日志：
@@ -55,3 +66,5 @@
 		ordersService.autoReceiveGoods(orderId, shop.getShopId());
 	2、com.sunspot.service.impl.OrdersServiceImpl
 			添加自动收货方法autoReceiveGoods(String, String);
+			
+			

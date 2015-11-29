@@ -39,4 +39,16 @@ public interface NearService
      * @author LuoAnDong
      */
     public ShopExt queryMap(String shopId); 
+    
+    /**
+     * 查询商店是否已被屏蔽
+     * @param shopExt
+     */
+    public boolean getShopStatus(ShopExt shopExt);
+    
+    /**
+     * 根据商店id查询商店是否已被屏蔽
+     * @param shopExt
+     */
+    public boolean getShopStatus(String shopId);
 }

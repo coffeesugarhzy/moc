@@ -85,6 +85,7 @@
 								<td>商品状态</td>
 								<td>
 									<select id=isShel name="isShel"> 
+									<#if cookbook.isShel??>
 									 <#if cookbook.isShel==0>  
 										<option  selected='selected' value="0">下架</option>
 									    <option  value="1">上架</option>
@@ -93,6 +94,11 @@
 										<option  value="0">下架</option>
 									    <option selected='selected'  value="1">上架</option>
 								    </#if>	
+								    <#else>
+								    	<option selected='selected'  value="">请设计状态</option>
+								    	<option value="0">下架</option>
+								    	<option value="1">上架</option>
+								    </#if>
 									</select>
 								</td>
 							</tr>

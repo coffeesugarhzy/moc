@@ -59,6 +59,7 @@
 					    <#if os.orderdetailsext?? && 0 < os.orderdetailsext?size>
 					    <#list os.orderdetailsext as ods>
 					    <#assign num = num + ods.num>
+					    <#if ods.cookbookLogo??&&ods.cookName!=''>
 						<li class="clearFix" ontouchstart=javascript:this.style.background='#f0f0f0' ontouchend=javascript:this.style.background='' onclick=javascript:window.location.href='/index/orders/cookbookdetail.do?id=${ods.cookbookId}&orderType=${os.orderType}'><img class="fl"
 							src="${ods.cookbookLogo}" width="70" height="70" alt="">
 							<p class="name">${ods.cookName}</p>
@@ -81,6 +82,9 @@
 							</#if>
 							<span class="order-num">x${ods.num}</span>
 							</li>
+							<#else>
+							<span class="name">该订单中的商品为空，请联系商家。</span>
+							</#if>
 						 </#list>
 					     </#if> 
 					</ul>
@@ -115,6 +119,7 @@
 					    <#if os.orderdetailsext?? && 0 < os.orderdetailsext?size>
 					    <#list os.orderdetailsext as ods>
 					    <#assign num = num + ods.num>
+					    <#if ods.cookName??>
 						<li class="clearFix" ontouchstart=javascript:this.style.background='#f0f0f0' ontouchend=javascript:this.style.background='' onclick=javascript:window.location.href='/index/orders/cookbookdetail.do?id=${ods.cookbookId}&orderType=${os.orderType}'><img class="fl"
 							src="${ods.cookbookLogo}" width="70" height="70" alt="">
 							<p class="name">${ods.cookName}</p>
@@ -137,6 +142,9 @@
 							</#if>
 							<span class="order-num">x${ods.num}</span>
 							</li>
+							<#else>
+							<span class="name">该订单中的商品为空，请联系商家。</span>
+							</#if>
 						 </#list>
 					     </#if> 
 					</ul>

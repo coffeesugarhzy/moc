@@ -105,5 +105,19 @@ public interface CookbookService
  
 
 	List<CookbookIndexExt> queryCookbookShowIndex(String shopId,String keyword,String type);
+	
+	/**
+	 * 判断商品是否已经下架
+	 * @param cookbook
+	 * @return
+	 */
+	boolean getGoodsStatus(Cookbook cookbook);
+	
+	/**
+	 * 根据ID判断商品是否已经下架
+	 * @param coonbookId
+	 * @return
+	 */
+	boolean getGoodsStatus(String cookbookId);
 
 }

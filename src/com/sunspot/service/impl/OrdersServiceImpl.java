@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import com.sunspot.common.DateUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sunspot.common.Utils;
 import com.sunspot.dao.BaseDao;
+import com.sunspot.pojo.Cookbook;
 import com.sunspot.pojo.CustomInfo;
 import com.sunspot.pojo.Orders;
 import com.sunspot.pojo.OrdersDetail;
@@ -30,6 +32,7 @@ import com.sunspot.pojoext.OrdersDetailExt;
 import com.sunspot.pojoext.OrdersExt;
 import com.sunspot.pojoext.OrdersIndexExt;
 import com.sunspot.service.CommentsService;
+import com.sunspot.service.CookbookService;
 import com.sunspot.service.OrdersService;
 
 
@@ -50,6 +53,9 @@ public class OrdersServiceImpl implements OrdersService
     
     @Autowired
     private CommentsService commentsService;
+    
+    @Autowired
+    private CookbookService cookbookService;
     
     Orders orders = new Orders();
     
@@ -669,7 +675,7 @@ public class OrdersServiceImpl implements OrdersService
                                         new Object[]
                                         { ordersIndexExt.getOrderId() },
                                         OrdersDetailExt.class));
-                for(OrdersDetailExt detailExt:ordersIndexExt.getOrderdetailsext()){
+                /*for(OrdersDetailExt detailExt:ordersIndexExt.getOrderdetailsext()){
                 	if(detailExt.getCookbookLogo()==null){
                 		detailExt.setCookbookLogo("/images/welcome_p.png");
                 	}
@@ -680,8 +686,7 @@ public class OrdersServiceImpl implements OrdersService
                 		detailExt.setCookType(0);
                 		detailExt.setTypeName("菜品");
                 	}
-                }
-                
+                }*/
                 break;
             case 2:
                 ordersIndexExt
@@ -1182,4 +1187,22 @@ public class OrdersServiceImpl implements OrdersService
         }
         return countMoney;
     }
+
+	/**
+	 * 订单列表中商品状态匹配
+	 */
+	public List<Integer> goodsStatusInOrders(List<OrdersIndexExt> list) {
+		List<Integer> isShels=new ArrayList<Integer>();
+		for(OrdersIndexExt ordersIndexExt :list){
+			for(OrdersDetailExt detailExt:ordersIndexExt.getOrderdetailsext()){
+				Cookbook cookbook=baseDao.getByHibernate(Cookbook.class, detailExt.getCookbookId());
+				if(cookbook.getIsShel()==0){
+					isShels.add(0);
+				}
+				else
+					isShels.add(1);
+			}
+		}
+		return isShels;
+	}
 }

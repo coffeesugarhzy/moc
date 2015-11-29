@@ -42,6 +42,7 @@ public class Fresh implements java.io.Serializable
     private double disPrice;
     private Integer disNum;
     private Integer orderNum;
+    private Integer isShel;//是否上架 0下架 1上架
 
     // Constructors
 
@@ -51,38 +52,40 @@ public class Fresh implements java.io.Serializable
     }
 
     /** full constructor */
-    public Fresh(String ofShopId, String logo, String freshName,
-            Integer freshType, String typeName, Integer marks, double price,
-            String makeMethod, Integer makeTime, String operate,
-            String addDate, String updateDate, String suggest, String remarks,
-            Integer isSale, Integer saleDay, double salePrice, Integer isDis,
-            String beginTime, String endTime, double disPrice, Integer disNum,
-            Integer orderNum)
-    {
-        this.ofShopId = ofShopId;
-        this.logo = logo;
-        this.freshName = freshName;
-        this.freshType = freshType;
-        this.typeName = typeName;
-        this.marks = marks;
-        this.price = price;
-        this.makeMethod = makeMethod;
-        this.makeTime = makeTime;
-        this.operate = operate;
-        this.addDate = addDate;
-        this.updateDate = updateDate;
-        this.suggest = suggest;
-        this.remarks = remarks;
-        this.isSale = isSale;
-        this.saleDay = saleDay;
-        this.salePrice = salePrice;
-        this.isDis = isDis;
-        this.beginTime = beginTime;
-        this.endTime = endTime;
-        this.disPrice = disPrice;
-        this.disNum = disNum;
-        this.orderNum = orderNum;
-    }
+    public Fresh(String freshId, String ofShopId, String logo,
+			String freshName, Integer freshType, String typeName,
+			Integer marks, double price, String makeMethod, Integer makeTime,
+			String operate, String addDate, String updateDate, String suggest,
+			String remarks, Integer isSale, Integer saleDay, double salePrice,
+			Integer isDis, String beginTime, String endTime, double disPrice,
+			Integer disNum, Integer orderNum, Integer isShel) {
+		super();
+		this.freshId = freshId;
+		this.ofShopId = ofShopId;
+		this.logo = logo;
+		this.freshName = freshName;
+		this.freshType = freshType;
+		this.typeName = typeName;
+		this.marks = marks;
+		this.price = price;
+		this.makeMethod = makeMethod;
+		this.makeTime = makeTime;
+		this.operate = operate;
+		this.addDate = addDate;
+		this.updateDate = updateDate;
+		this.suggest = suggest;
+		this.remarks = remarks;
+		this.isSale = isSale;
+		this.saleDay = saleDay;
+		this.salePrice = salePrice;
+		this.isDis = isDis;
+		this.beginTime = beginTime;
+		this.endTime = endTime;
+		this.disPrice = disPrice;
+		this.disNum = disNum;
+		this.orderNum = orderNum;
+		this.isShel = isShel;
+	}
 
     // Property accessors
     @GenericGenerator(name = "generator", strategy = "uuid2")
@@ -94,7 +97,7 @@ public class Fresh implements java.io.Serializable
         return this.freshId;
     }
 
-    public void setFreshId(String freshId)
+	public void setFreshId(String freshId)
     {
         this.freshId = freshId;
     }
@@ -351,5 +354,14 @@ public class Fresh implements java.io.Serializable
     {
         this.orderNum = orderNum;
     }
+    
+    @Column(name = "IS_SHEL")
+	public Integer getIsShel() {
+		return isShel;
+	}
+
+	public void setIsShel(Integer isShel) {
+		this.isShel = isShel;
+	}
 
 }

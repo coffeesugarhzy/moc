@@ -62,7 +62,9 @@ function ajaxFunc() {
                     logo = content[i].logo;
                     shopId = content[i].ofShopId;
                     shopName = content[i].shopName;
-                    price = content[i].price;
+                    price = content[i].price;、
+                    
+                    isShel=content[i].isShels;
 
                     if (0 == content[i].isSale && weekDay == content[i].saleDay) {
                         saleType = 0;
@@ -80,8 +82,10 @@ function ajaxFunc() {
                     temp += "<li class='clearFix' ontouchend=javascript:this.style.background=''  ontouchstart=javascript:this.style.background='#f0f0f0'>";
                     temp += "<img class='fl' src='" + logo + "' width='70' height='70' alt='' onclick=javascript:window.location.href='/index/dinner/detail.do?cookbooksId="+cookbooksId+"'>";
                     temp += "<p class='name'>" + cookName + "</p>";
+                    if(isShel==0)
+                    	temp +="<p class='name'>" + 商品已经下架 + "</p>";
                     temp += "<p class='intro'>建议用餐人数：" + suggest + "</p>";
-
+                    
                     // 判断是否特价
                     if (0 <= saleType) {
                         temp += "<p class='price'><span class='new-price'>¥" + saleprice + "</span>&nbsp;<span class='last-price'>¥" + price + "</span></p>";

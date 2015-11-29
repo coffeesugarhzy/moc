@@ -53,7 +53,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 			String loginType) { 
 		try{ 
 		     
-			List<Map<String, Object>> userInfoMap =  baseDao.query("select user_id,login_name,role_id,user_name,user_type from user_info where login_name=? and login_password=? and user_type=? ", 
+			List<Map<String, Object>> userInfoMap =  baseDao.query("select user_id,login_name,role_id,user_name,user_type,status from user_info where login_name=? and login_password=? and user_type=? ", 
 			        new Object[] { username, MD5.encrypt(password), loginType });
 			if(userInfoMap != null && userInfoMap.size() == 1){
 			     
@@ -68,7 +68,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 			    
 			    String userType = map.get("user_type").toString() ;
 			    String userName = map.get("user_name")==null?"":map.get("user_name").toString() ;
-			    Integer status=Integer.parseInt(map.get("status").toString());
+			    int status=Integer.parseInt(map.get("status")+"");
 			    String ofRoleId = map.get("role_id").toString() ; 
 			    
 			    UserRole userRole = new UserRole() ; 
@@ -81,7 +81,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 			    userInfo.setUserId(userId) ; 
 			    userInfo.setStatus(status);
 			    userInfo.setUserRole(userRole) ; 
-			    
 	            return userInfo ; 
 	            
 			}else{ 

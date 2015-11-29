@@ -2,7 +2,6 @@ package com.sunspot.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -331,9 +330,11 @@ public class CookbookServiceImpl implements CookbookService
      * 通过id查询实体
      */
     public Cookbook queryById(String id)
-    {
-        return baseDao.queryForObject(QUERY_COOKBOOK_ID, new Object[]
-        { id }, Cookbook.class);
+    {	
+    	Cookbook cookbook=new Cookbook();//baseDao.queryForObject(QUERY_COOKBOOK_ID, new Object[]{id}, Cookbook.class);
+    	cookbook=baseDao.query(QUERY_COOKBOOK_ID, new Object[]{id}, Cookbook.class).get(0);
+    	System.out.println("is_shel-->"+cookbook.getIsShel());
+        return cookbook;
     }
 
     /**
@@ -395,11 +396,13 @@ public class CookbookServiceImpl implements CookbookService
 
     /**
      * 删除
+     * 2015-11-21 韦英飘 修改
+     * 删除变为下架
      */
     public void delete(String id)
     {
 
-        baseDao.delHQL("delete from Cookbook as c where c.cookbooksId=?",
+        baseDao.delHQL("update cookbook as c set is_shel=1 where c.cookbooksId=?",
                 new String[]
                 { id });
 
@@ -568,4 +571,29 @@ public class CookbookServiceImpl implements CookbookService
         	}
         }
 	}
+	
+	/**
+	 * 判断商品是否已经下架
+	 * @param cookbook
+	 * @return
+	 */
+	@Override
+	public boolean getGoodsStatus(Cookbook cookbook) {
+		if(cookbook.getIsShel()==0) return true;
+		return false;
+	}
+	
+	/**
+	 * 根据ID判断商品是否已经下架
+	 * @param coonbookId
+	 * @return
+	 */
+	@Override
+	public boolean getGoodsStatus(String cookbookId) {
+		Cookbook cookbook=baseDao.getByHibernate(Cookbook.class, cookbookId);
+		if(cookbook.getIsShel()==0) return true;
+		return false;
+	}
+	
+	
 }

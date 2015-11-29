@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.sunspot.common.Utils;
 import com.sunspot.dao.BaseDao;
+import com.sunspot.pojo.Shop;
+import com.sunspot.pojo.UserInfo;
 import com.sunspot.pojoext.ShopExt;
 import com.sunspot.service.NearService;
 
@@ -29,6 +31,7 @@ public class NearServiceImpl implements NearService
      */
     @Resource
     private BaseDao baseDao;
+    
 
     /**
      * 店铺所有信息,距离(distance)
@@ -70,6 +73,10 @@ public class NearServiceImpl implements NearService
             List<ShopExt> list = baseDao.query(sql, new Object[]
             { longitude, latitude, latitude, filter, currentSize, pageSize },
             ShopExt.class);
+            //剔除被屏蔽的商店
+            for(int i=0;i<list.size();i++){
+            	if(getShopStatus(list.get(i)))list.remove(i);
+            }
             return list ; 
         }
         //距离
@@ -80,6 +87,10 @@ public class NearServiceImpl implements NearService
             List<ShopExt> list = baseDao.query(sql, new Object[]
                                               { longitude, latitude, latitude, filter, currentSize, pageSize },
                                               ShopExt.class);
+            //剔除被屏蔽的商店
+            for(int i=0;i<list.size();i++){
+            	if(getShopStatus(list.get(i)))list.remove(i);
+            }
             return list ; 
         }
         //评价
@@ -95,6 +106,10 @@ public class NearServiceImpl implements NearService
             List<ShopExt> list = baseDao.query(sql, new Object[]
                                               { longitude, latitude, latitude, currentSize, pageSize },
                                               ShopExt.class);
+            //剔除被屏蔽的商店
+            for(int i=0;i<list.size();i++){
+            	if(getShopStatus(list.get(i)))list.remove(i);
+            }
             return list ; 
         }
         //搜索
@@ -104,6 +119,10 @@ public class NearServiceImpl implements NearService
             List<ShopExt> list = baseDao.query(sql, new Object[]
             { longitude, latitude, latitude, Utils.getKeyword(filter), currentSize, pageSize },
             ShopExt.class);
+            //剔除被屏蔽的商店
+            for(int i=0;i<list.size();i++){
+            	if(getShopStatus(list.get(i)))list.remove(i);
+            }
             return list ; 
         }else if(filterType == 5){
             if(StringUtils.isBlank(filter)) filter="%" ; 
@@ -111,6 +130,10 @@ public class NearServiceImpl implements NearService
             List<ShopExt> list = baseDao.query(sql, new Object[]
             { longitude, latitude, latitude, filter, currentSize, pageSize },
             ShopExt.class);
+            //剔除被屏蔽的商店
+            for(int i=0;i<list.size();i++){
+            	if(getShopStatus(list.get(i)))list.remove(i);
+            }
             return list ; 	
         }else if(filterType == 6){
             if(StringUtils.isBlank(filter)) filter="%" ; 
@@ -118,6 +141,10 @@ public class NearServiceImpl implements NearService
             List<ShopExt> list = baseDao.query(sql, new Object[]
             { longitude, latitude, latitude, filter, currentSize, pageSize },
             ShopExt.class);
+            //剔除被屏蔽的商店
+            for(int i=0;i<list.size();i++){
+            	if(getShopStatus(list.get(i)))list.remove(i);
+            }
             return list ; 	
         }
 
@@ -134,10 +161,12 @@ public class NearServiceImpl implements NearService
     @Override
     public ShopExt query(String longitude , String latitude ,String shopId)
     {
-        return baseDao.queryForObject(
-                    SHOP_ALL_SQL+" where a.shop_id=?", 
-                    new Object[]{ longitude, latitude, latitude,shopId}, 
-                    ShopExt.class) ; 
+    	ShopExt shopExt=baseDao.queryForObject(
+                SHOP_ALL_SQL+" where a.shop_id=?", 
+                new Object[]{ longitude, latitude, latitude,shopId}, 
+                ShopExt.class) ;
+    	//if(getShopStatus(shopExt))map
+        return shopExt; 
     }
 
     /**
@@ -152,6 +181,27 @@ public class NearServiceImpl implements NearService
         return baseDao.queryForObject("select shop_name,telphone,address,longitude,latitude from shop where shop_id=?", 
                 new Object[]{shopId}, 
                 ShopExt.class);
+    }
+    
+    /**
+     * 查询商店是否已被屏蔽或被注销
+     * @param shopExt
+     */
+    public boolean getShopStatus(ShopExt shopExt){
+    	UserInfo userInfo=baseDao.getByHibernate(UserInfo.class,shopExt.getOfUserId());
+    	if(userInfo.getStatus()==3||userInfo.getStatus()==1) return true;
+    	return false;
+    }
+    
+    /**
+     * 根据商店id查询商店是否已被屏蔽或被注销
+     * @param shopExt
+     */
+    public boolean getShopStatus(String shopId){
+    	Shop shop=baseDao.getByHibernate(Shop.class, shopId);
+    	UserInfo userInfo=baseDao.getByHibernate(UserInfo.class,shop.getOfUserId());
+    	if(userInfo.getStatus()==3||userInfo.getStatus()==1) return true;
+    	return false;
     }
 
 }

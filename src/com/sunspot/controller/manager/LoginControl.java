@@ -195,11 +195,11 @@ public class LoginControl
             runLog.info("login failed,ERRORCODE:" + Constants.USER_OR_PASS_NULL);
             return RE_LOGIN_PAGE;
         }
-
+        System.out.println("start");
         // 验证用户信息
         userInfo = userInfoService.checkUserLogin(userName.trim(),
                 password.trim(), loginType);
-
+        
         // 登陆成功
         if (userInfo != null)
         {
@@ -212,6 +212,7 @@ public class LoginControl
             runLog.info("login success,userName=" + userName); 
             //如果用户被注销，则禁止登录
         	if(userInfo.getStatus()==3)return RE_LOGIN_PAGE;
+        	
             return LOGIN_SUCCESS; 
         }
         else

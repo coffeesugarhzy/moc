@@ -47,41 +47,41 @@ public class Cookbook implements java.io.Serializable
     public Cookbook()
     {
     }
-
-    /** full constructor */
-    public Cookbook(String logo, String ofShopId, String cookName,
-            Integer cookType, Integer marks, double price, String typeName,
-            String addDate, String updateDate, String suggest, String remarks,
-            Integer isSale, Integer saleDay, double salePrice, Integer isDis,
-            String beginTime, String endTime, double disPrice, Integer disNum,
-            Integer orderNum,
-            Integer isShel)
-    {
-        this.logo = logo;
-        this.ofShopId = ofShopId;
-        this.cookName = cookName;
-        this.cookType = cookType;
-        this.marks = marks;
-        this.price = price;
-        this.typeName = typeName;
-        this.addDate = addDate;
-        this.updateDate = updateDate;
-        this.suggest = suggest;
-        this.remarks = remarks;
-        this.isSale = isSale;
-        this.saleDay = saleDay;
-        this.salePrice = salePrice;
-        this.isDis = isDis;
-        this.beginTime = beginTime;
-        this.endTime = endTime;
-        this.disPrice = disPrice;
-        this.disNum = disNum;
-        this.orderNum = orderNum;
-        this.isShel=isShel;
-    }
-
     
-    // Property accessors
+    public Cookbook(String cookbooksId, String logo, String ofShopId,
+			String cookName, Integer cookType, Integer marks, double price,
+			String typeName, String addDate, String updateDate, String suggest,
+			String remarks, Integer isSale, Integer saleDay, double salePrice,
+			Integer isDis, String beginTime, String endTime, double disPrice,
+			Integer disNum, Integer orderNum, Integer isShel,
+			String cookbookType) 
+    {
+		this.cookbooksId = cookbooksId;
+		this.logo = logo;
+		this.ofShopId = ofShopId;
+		this.cookName = cookName;
+		this.cookType = cookType;
+		this.marks = marks;
+		this.price = price;
+		this.typeName = typeName;
+		this.addDate = addDate;
+		this.updateDate = updateDate;
+		this.suggest = suggest;
+		this.remarks = remarks;
+		this.isSale = isSale;
+		this.saleDay = saleDay;
+		this.salePrice = salePrice;
+		this.isDis = isDis;
+		this.beginTime = beginTime;
+		this.endTime = endTime;
+		this.disPrice = disPrice;
+		this.disNum = disNum;
+		this.orderNum = orderNum;
+		this.isShel = isShel;
+		this.cookbookType = cookbookType;
+	}
+
+	// Property accessors
     @GenericGenerator(name = "generator", strategy = "uuid2")
     @Id
     @GeneratedValue(generator = "generator")
@@ -316,16 +316,16 @@ public class Cookbook implements java.io.Serializable
         this.orderNum = orderNum;
     }
     
-    @Column(name = "IS_SHEL")
-	public Integer getIsShel() {
+	@Column(name="IS_SHEL")
+    public Integer getIsShel() {
 		return isShel;
 	}
 
 	public void setIsShel(Integer isShel) {
 		this.isShel = isShel;
 	}
-	
-    @Column(name = "cookbook_type", length = 36)
+
+	@Column(name = "cookbook_type", length = 36)
 	public String getCookbookType() {
 		return cookbookType;
 	}

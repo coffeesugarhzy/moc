@@ -40,6 +40,7 @@ public class FarmProduce implements java.io.Serializable
     private double disPrice;
     private Integer disNum;
     private Integer orderNum;
+    private Integer isShel;//是否上架 0下架 1上架
 
     // Constructors
 
@@ -47,38 +48,41 @@ public class FarmProduce implements java.io.Serializable
     public FarmProduce()
     {
     }
-
+    
     /** full constructor */
-    public FarmProduce(String ofShopId, String logo, String farmName,
-            String typeName, Integer marks, double price, String spec,
-            String produceCode, String groundTime, String addDate,
-            String updateDate, String remarks, Integer isSale, Integer saleDay,
-            double salePrice, Integer isDis, String beginTime, String endTime,
-            double disPrice, Integer disNum, Integer orderNum)
-    {
-        this.ofShopId = ofShopId;
-        this.logo = logo;
-        this.farmName = farmName;
-        this.typeName = typeName;
-        this.marks = marks;
-        this.price = price;
-        this.spec = spec;
-        this.produceCode = produceCode;
-        this.groundTime = groundTime;
-        this.addDate = addDate;
-        this.updateDate = updateDate;
-        this.remarks = remarks;
-        this.isSale = isSale;
-        this.saleDay = saleDay;
-        this.salePrice = salePrice;
-        this.isDis = isDis;
-        this.beginTime = beginTime;
-        this.endTime = endTime;
-        this.disPrice = disPrice;
-        this.disNum = disNum;
-        this.orderNum = orderNum;
-    }
+    public FarmProduce(String farmId, String ofShopId, String logo,
+			String farmName, String typeName, Integer marks, double price,
+			String spec, String produceCode, String groundTime, String addDate,
+			String updateDate, String remarks, Integer isSale, Integer saleDay,
+			double salePrice, Integer isDis, String beginTime, String endTime,
+			double disPrice, Integer disNum, Integer orderNum, Integer isShel) {
+		super();
+		this.farmId = farmId;
+		this.ofShopId = ofShopId;
+		this.logo = logo;
+		this.farmName = farmName;
+		this.typeName = typeName;
+		this.marks = marks;
+		this.price = price;
+		this.spec = spec;
+		this.produceCode = produceCode;
+		this.groundTime = groundTime;
+		this.addDate = addDate;
+		this.updateDate = updateDate;
+		this.remarks = remarks;
+		this.isSale = isSale;
+		this.saleDay = saleDay;
+		this.salePrice = salePrice;
+		this.isDis = isDis;
+		this.beginTime = beginTime;
+		this.endTime = endTime;
+		this.disPrice = disPrice;
+		this.disNum = disNum;
+		this.orderNum = orderNum;
+		this.isShel = isShel;
+	}
 
+    
     // Property accessors
     @GenericGenerator(name = "generator", strategy = "uuid2")
     @Id
@@ -324,4 +328,13 @@ public class FarmProduce implements java.io.Serializable
     {
         this.orderNum = orderNum;
     }
+    
+    @Column(name = "IS_SHEL")
+   	public Integer getIsShel() {
+   		return isShel;
+   	}
+
+   	public void setIsShel(Integer isShel) {
+   		this.isShel = isShel;
+   	}
 }

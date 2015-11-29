@@ -62,6 +62,8 @@ function ajaxFunc() {
                     shopName = content[i].shopName;
                     price = content[i].price;
                     
+                    isShel=content[i].isShels;
+                    
                     if (0 == content[i].isSale && weekDay == content[i].saleDay) {
                         saleType = 0;
                         saleprice = content[i].salePrice;
@@ -79,6 +81,8 @@ function ajaxFunc() {
                     temp += "<li class='clearFix' ontouchend=javascript:this.style.background=''  ontouchstart=javascript:this.style.background='#f0f0f0'>";
                     temp += "<img class='fl'  onclick=javascript:window.location.href='/index/dinner/detail.do?cookbooksId="+cookbooksId+"' src='" + logo + "' width='70' height='70' alt=''>";
                     temp += "<p class='name'>" + cookName + "</p>";
+                    if(isShel==0)
+                    	temp +="<p class='name'>" + 商品已经下架 + "</p>";
                     temp += "<p class='intro'>精选自：" + shopName + "</p>";
 
              

@@ -148,11 +148,13 @@ public class FreshServiceImpl implements FreshService
 
     /**
      * 删除
+     * 2015-11-21 韦英飘 修改
+     * 删除变为下架
      */
     public void delete(String id)
     {
 
-        baseDao.delHQL("delete from Fresh as f where f.freshId=?", new String[]
+        baseDao.delHQL("update fresh as f set is_shel=1 where f.freshId=?", new String[]
         { id });
 
         runLog.info("delete fresh,id=" + id);

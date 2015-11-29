@@ -237,5 +237,11 @@ public interface OrdersService
      * @return 金额
      */
     double countMoney(String ordersCode);
-
+    
+    /**
+     * 订单列表中商品状态匹配
+     * @param list
+     * @return
+     */
+    List<Integer> goodsStatusInOrders(List<OrdersIndexExt> list);
 }

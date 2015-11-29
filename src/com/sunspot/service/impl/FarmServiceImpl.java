@@ -121,11 +121,13 @@ public class FarmServiceImpl implements FarmService
 
     /**
      * 删除
+     * 2015-11-21 韦英飘 修改
+     * 删除变为下架
      */
     public void delete(String id)
     {
 
-        baseDao.delHQL("delete from FarmProduce as f where f.farmId=?",
+        baseDao.delHQL("update FarmProduce as f set is_shel=1 where f.farmId=?",
                 new String[]
                 { id });
 

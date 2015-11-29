@@ -1,5 +1,6 @@
 package com.sunspot.controller.index;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ import com.sunspot.service.CookbookTypeService;
 import com.sunspot.service.CustomInfoService;
 import com.sunspot.service.CustomLikeService;
 import com.sunspot.service.DataTypeService;
+import com.sunspot.service.NearService;
 import com.sunspot.service.OrdersService;
 import com.sunspot.service.ShopService;
 
@@ -89,6 +91,9 @@ public class DinnerIndexController
     
     @Autowired
     private CustomInfoService customInfoService;
+    
+    @Autowired
+    private NearService nearService;
     
     /**
      * 前端首页
@@ -154,7 +159,15 @@ public class DinnerIndexController
             HttpServletRequest request, DataGridModel<CookbookIndexExt> list,
             Integer queryType, Integer key, String value)
     {
+    	List<Integer> isShels=new ArrayList<Integer>();//记录商品状态
         cookbookService.queryPage(list, queryType, key, value);
+        for(CookbookIndexExt indexExt:list.getContent()){
+    		if(cookbookService.getGoodsStatus(indexExt.getCookbooksId()))
+    			isShels.add(0);
+    		else
+    			isShels.add(1);
+    	}
+        request.setAttribute("isShels",isShels);
         return list;
     }
 
@@ -232,7 +245,7 @@ public class DinnerIndexController
         modelMap.addAttribute("value",value); 
         modelMap.addAttribute("cookbooks",
                 cookbookService.queryCookbookShowIndex(shopId, value, cooktype));
-        
+        if(nearService.getShopStatus(shopId))modelMap.addAttribute("status", 0);//商店被屏蔽的标识
         cheskShopLike(modelMap , session ,shop.getShopId(),0);
     }
 
@@ -253,9 +266,17 @@ public class DinnerIndexController
      */
     @RequestMapping(value = "shopsales")
     public void shopsales(String shopId, ModelMap modelMap)
-    {
-        modelMap.addAttribute("sales",
-                cookbookService.queryShopCbId(2, shopId, null));
+    {	
+    	List<Integer> isShels=new ArrayList<Integer>();//记录商品状态
+    	List<CookbookIndexExt> cookbookIndexExts=cookbookService.queryShopCbId(2, shopId, null);
+    	for(CookbookIndexExt indexExt:cookbookIndexExts){
+    		if(cookbookService.getGoodsStatus(indexExt.getCookbooksId()))
+    			isShels.add(0);
+    		else
+    			isShels.add(1);
+    	}
+        modelMap.addAttribute("sales",cookbookIndexExts);
+        modelMap.addAttribute("isShels",isShels);
         modelMap.addAttribute("weekDay", Utils.getWeekDay());
         modelMap.addAttribute("curTime", Utils.getCurDate("HH:mm"));
     }
@@ -266,9 +287,17 @@ public class DinnerIndexController
     @RequestMapping(value = "shopplans")
     public void shopplans(String shopId, ModelMap modelMap)
     {
-        modelMap.addAttribute("plans",
-                cookbookService.queryShopCbId(3, shopId, null));
+    	List<Integer> isShels=new ArrayList<Integer>();//记录商品状态
+    	List<CookbookIndexExt> cookbookIndexExts=cookbookService.queryShopCbId(3, shopId, null);
+    	for(CookbookIndexExt indexExt:cookbookIndexExts){
+    		if(cookbookService.getGoodsStatus(indexExt.getCookbooksId()))
+    			isShels.add(0);
+    		else
+    			isShels.add(1);
+    	}
+        modelMap.addAttribute("plans",cookbookIndexExts);
         modelMap.addAttribute("weekDay", Utils.getWeekDay());
+        modelMap.addAttribute("isShels",isShels);
         modelMap.addAttribute("curTime", Utils.getCurDate("HH:mm"));
     }
     
@@ -372,13 +401,14 @@ public class DinnerIndexController
 
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
                 String url = "jdbc:mysql://localhost:3306/limmai?useUnicode=true&characterEncoding=UTF8";
-                Connection conn = DriverManager.getConnection(url, "root", "admin");//Limmai007
+                Connection conn = DriverManager.getConnection(url, "root", "12345");//Limmai007
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery("select order_id,of_custom_id,order_money from orders WHERE orders_code='"+orderCodes+"'");
                 while (rs.next()) {
                     modelMap.addAttribute("order_id", rs.getString(1));
                     modelMap.addAttribute("user_id", rs.getString(2));
                     modelMap.addAttribute("money", rs.getString(3));
+                   System.out.println("orderId->"+rs.getString(1));
                 }
                 rs.close();
                 stmt.close();
